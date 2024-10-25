@@ -28,7 +28,7 @@ jobs:
         run: pyinstaller --onefile crypto.py
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto-${{ matrix.os }}
           path: dist/crypto*
