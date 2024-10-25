@@ -34,3 +34,42 @@ Once downloaded, you can run the application directly from the terminal:
 ./crypto-macos   # For macOS
 crypto-windows.exe # For windows
 
+
+
+
+
+                                                        ## Building from Source
+
+
+
+If you want to build the Crypto and Stock Data Fetcher application from source, follow these steps: Ensure you have the following installed on your system: **Python 3.x**: Download and install from [python.org](https://www.python.org/downloads/). **pip**: Python's package installer (usually comes with Python). **PyInstaller**: For creating standalone executables. Open your terminal or command prompt and run: 
+
+
+git clone https://github.com/King-kin5/Stock.git
+cd Stock
+Create a virtual environment (optional but recommended) and install the necessary Python packages:
+
+python -m venv venv          # Create a virtual environment
+source venv/bin/activate     # Activate on Linux or macOS
+# venv\Scripts\activate       # Activate on Windows
+pip install -r requirements.txt
+If you haven’t installed PyInstaller yet, run:
+
+pip install pyinstaller
+Create the executable binary by running:
+
+
+pyinstaller --onefile crypto.py
+This will generate a standalone executable, which can be found in the dist directory after the build process is complete. Navigate to the dist directory and run the binary:
+
+
+cd dist
+# For Linux
+./crypto-linux
+# For macOS
+./crypto-macos
+# For Windows
+crypto-windows.exe
+
+
+
