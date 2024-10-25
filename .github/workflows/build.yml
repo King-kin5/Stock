@@ -2,34 +2,84 @@ name: Build Binaries
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Adjust as needed
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
 
-    - name: Build binary
-      run: pyinstaller --onefile crypto.py
+      - name: Build binary
+        run: pyinstaller --onefile crypto.py
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: crypto-binary
-        path: dist/crypto
-        
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: crypto-linux
+          path: dist/crypto  # Adjust to match the binary output file name
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build binary
+        run: pyinstaller --onefile crypto.py
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: crypto-windows
+          path: dist/crypto.exe  # Adjust to match the binary output file name
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build binary
+        run: pyinstaller --onefile crypto.py
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: crypto-macos
+          path: dist/crypto  # Adjust to match the binary output file name
